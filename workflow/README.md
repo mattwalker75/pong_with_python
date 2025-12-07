@@ -1,2 +1,10 @@
-# pong_with_python
-A pong game written in Python because why not
+
+Workflow that was used to generate this code.
+
+----------------------------
+
+AI Tools used:
+  - ChatGPT
+  - Claude Code
+
+

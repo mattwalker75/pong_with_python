@@ -1,0 +1,29 @@
+
+I passed the following prompt to ChatGTP to generate a Product 
+Requirement Document (PRD):
+
+Help me make a Product Requirements Document (PRD) for an app that I 
+am vibe coding with Claude Code.  I am going to build the game of Pong 
+that can be played locally on a computer.  The following bullets are 
+the objectives and guildelines centered around the application.
+
+Program Type:  Game of Pong
+Programming Language:  Python
+Number of Players: 1 or 2
+   NOTE:  If 1 player is selected, then the game should have logic to 
+          play the person with increased level of difficulty
+Libraries:  Choose the best libraries for the specific tasks and needs.  
+            If there are multiple libraries that can perform the task, 
+            then you are allowed to consult the Internet to best determine 
+            which library to pick
+Testing:  All code should have Unit Tests defined with a minimum goal of 
+          80% code coverage
+Installation:  Track all required libraries in a requirements.txt file 
+               that can be installed via the pip command
+Documentation:  Provide documentation on how to install, configure ( if 
+                appliable ), play, and uninstall the game
+
+You can ask me any needed questions to help think through the application 
+to full y build out the PRD document.  Provide the PRD document in a form 
+that I can simply copy from here and paste into Claude Code for coding.
+

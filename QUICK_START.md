@@ -54,17 +54,26 @@ That's it! The game should launch in a new window.
 
 ### During Gameplay
 
-**Player 1 (Left Paddle):**
+**Default Controls (Single Player):**
+- **Up Arrow** - Move Up
+- **Down Arrow** - Move Down
+
+**Default Controls (Two Player):**
+
+Player 1 (Left Paddle):
 - **W** - Move Up
 - **S** - Move Down
 
-**Player 2 (Right Paddle):**
+Player 2 (Right Paddle):
 - **Up Arrow** - Move Up
 - **Down Arrow** - Move Down
 
 **Other Controls:**
 - **ESC** - Pause/Resume
 - **F11** - Toggle Fullscreen
+
+**Want different controls?**
+Go to Settings → Configure Controls to customize your key bindings!
 
 ### Game Objective
 - Prevent the ball from passing your paddle
@@ -74,12 +83,26 @@ That's it! The game should launch in a new window.
 
 ## Customization
 
-Want to change game settings? Edit `src/game/settings.py`:
+### In-Game Settings
+
+The easiest way to customize the game is through the Settings menu:
+
+1. From the main menu, select **SETTINGS**
+2. Configure:
+   - **Difficulty** - AI difficulty (Easy/Normal/Hard)
+   - **Audio** - Toggle sound on/off
+   - **Fullscreen** - Toggle fullscreen mode
+   - **Configure Controls** - Remap keyboard controls
+
+All settings are automatically saved to `game_config.cfg` and loaded on next startup.
+
+### Advanced Code Settings
+
+For advanced customization, edit `src/game/settings.py`:
 
 ```python
 # Easy changes
 winning_score = 15              # Change points to win
-difficulty_preset = "Hard"       # Make AI harder
 paddle_speed = 8.0              # Faster paddles
 ball_max_speed = 15.0           # Faster ball
 ```

@@ -5,6 +5,55 @@ from game.settings import settings, save_settings, ControlMapping
 from game.ui.components.button import Button
 
 
+def get_key_name(key_code: int) -> str:
+    """Convert key code to readable name.
+
+    Args:
+        key_code: Arcade key code
+
+    Returns:
+        Human-readable key name
+    """
+    # Common key mappings
+    key_names = {
+        arcade.key.UP: "UP",
+        arcade.key.DOWN: "DOWN",
+        arcade.key.LEFT: "LEFT",
+        arcade.key.RIGHT: "RIGHT",
+        arcade.key.W: "W",
+        arcade.key.A: "A",
+        arcade.key.S: "S",
+        arcade.key.D: "D",
+        arcade.key.I: "I",
+        arcade.key.J: "J",
+        arcade.key.K: "K",
+        arcade.key.L: "L",
+        arcade.key.Q: "Q",
+        arcade.key.E: "E",
+        arcade.key.O: "O",
+        arcade.key.P: "P",
+        arcade.key.SPACE: "SPACE",
+        arcade.key.ENTER: "ENTER",
+        arcade.key.ESCAPE: "ESC",
+        arcade.key.TAB: "TAB",
+        arcade.key.LSHIFT: "L-SHIFT",
+        arcade.key.RSHIFT: "R-SHIFT",
+        arcade.key.LCTRL: "L-CTRL",
+        arcade.key.RCTRL: "R-CTRL",
+    }
+
+    # Check if it's in our mapping
+    if key_code in key_names:
+        return key_names[key_code]
+
+    # Try to convert ASCII codes for letters
+    if 97 <= key_code <= 122:  # lowercase letters
+        return chr(key_code).upper()
+
+    # Fall back to showing the key code
+    return f"Key {key_code}"
+
+
 class ControlsMenuView(arcade.View):
     """Controls configuration screen."""
 
@@ -27,12 +76,12 @@ class ControlsMenuView(arcade.View):
         button_spacing = 60
 
         # Get key names for display
-        single_up_key = arcade.key.key_to_string(settings.single_player_controls.up)
-        single_down_key = arcade.key.key_to_string(settings.single_player_controls.down)
-        p1_up_key = arcade.key.key_to_string(settings.two_player_p1_controls.up)
-        p1_down_key = arcade.key.key_to_string(settings.two_player_p1_controls.down)
-        p2_up_key = arcade.key.key_to_string(settings.two_player_p2_controls.up)
-        p2_down_key = arcade.key.key_to_string(settings.two_player_p2_controls.down)
+        single_up_key = get_key_name(settings.single_player_controls.up)
+        single_down_key = get_key_name(settings.single_player_controls.down)
+        p1_up_key = get_key_name(settings.two_player_p1_controls.up)
+        p1_down_key = get_key_name(settings.two_player_p1_controls.down)
+        p2_up_key = get_key_name(settings.two_player_p2_controls.up)
+        p2_down_key = get_key_name(settings.two_player_p2_controls.down)
 
         # Create controls buttons
         self.buttons = [
@@ -85,12 +134,12 @@ class ControlsMenuView(arcade.View):
 
     def _update_button_text(self) -> None:
         """Update button text to reflect current key bindings."""
-        self.buttons[0].text = f"Single Player Up: {arcade.key.key_to_string(settings.single_player_controls.up)}"
-        self.buttons[1].text = f"Single Player Down: {arcade.key.key_to_string(settings.single_player_controls.down)}"
-        self.buttons[2].text = f"Two Player P1 Up: {arcade.key.key_to_string(settings.two_player_p1_controls.up)}"
-        self.buttons[3].text = f"Two Player P1 Down: {arcade.key.key_to_string(settings.two_player_p1_controls.down)}"
-        self.buttons[4].text = f"Two Player P2 Up: {arcade.key.key_to_string(settings.two_player_p2_controls.up)}"
-        self.buttons[5].text = f"Two Player P2 Down: {arcade.key.key_to_string(settings.two_player_p2_controls.down)}"
+        self.buttons[0].text = f"Single Player Up: {get_key_name(settings.single_player_controls.up)}"
+        self.buttons[1].text = f"Single Player Down: {get_key_name(settings.single_player_controls.down)}"
+        self.buttons[2].text = f"Two Player P1 Up: {get_key_name(settings.two_player_p1_controls.up)}"
+        self.buttons[3].text = f"Two Player P1 Down: {get_key_name(settings.two_player_p1_controls.down)}"
+        self.buttons[4].text = f"Two Player P2 Up: {get_key_name(settings.two_player_p2_controls.up)}"
+        self.buttons[5].text = f"Two Player P2 Down: {get_key_name(settings.two_player_p2_controls.down)}"
 
     def on_draw(self) -> None:
         """Draw the menu."""

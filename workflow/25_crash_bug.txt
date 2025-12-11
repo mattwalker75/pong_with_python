@@ -1,0 +1,18 @@
+
+I passed the following prompt to Claude to fix a bug:
+
+Found a bug.  If you are in the game, and pause it to go into the 
+Settings, then you get the following error:
+
+[AUDIO] Error playing background music: [Errno -9986] Internal PortAudio error
+python(66032,0x1f0596080) malloc: double free for ptr 0x1471c3a00
+python(66032,0x1f0596080) malloc: *** set a breakpoint in malloc_error_break to debug
+
+I am assuming that is from the audio driver due to the fact that we 
+are running with a continuous audio stream instead of constantly 
+opening and closing audio streams.  Remember we were experiencing 
+cracking in the audio due to the constantly opening and closing of 
+audio streams.  So if that is the reason for the error, then I would 
+say to just remove the Settings option from the Pause window and only 
+leave it in the main window
+

@@ -9,6 +9,10 @@ AI Tools used:
   - Claude Code
      - Used for development, coding, and unit testing
 
+Developer Tools:
+  - VSCode for Integrated Development Environment (IDE)
+  - "Claude Code for VS Code" VSCode extension
+
 This document will cover my interactions with AI to build out this
 tool.  It will consist of which AI tools I used for which parts along
 with which prompts I passed to the AI.
@@ -106,4 +110,19 @@ Below are the workflow that I went through to create the Pong Game:
       - broke.png
       - 22_Graphic_Glitch.txt 
 23: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
+
+==> MISC TWEAKS AND CLEANUP <==
+24: Add some documentation to the code.  Below is the prompt that I 
+    sent to Claude:
+      - 24_documentation.txt
+25: I found a bug where the game would crash when you pause it and try to
+    modify the Settings.  I sent this prompt to Claude:
+      - 25_crash_bug.txt
+26: Made a few minor tweaks with the assistance of Claude.
+27: Always test the game and run the unit tests after every tweak and fix!
+23: --  COMMITED THE CODE AND CALLED THE TWEAKS AND CLEANUP COMPLETE
+
+
+
+
 

@@ -16,7 +16,6 @@ class PauseMenu:
 
         # Callbacks
         self.on_resume: Optional[Callable] = None
-        self.on_settings: Optional[Callable] = None
         self.on_quit: Optional[Callable] = None
 
         self._setup_buttons()
@@ -29,17 +28,12 @@ class PauseMenu:
 
         self.buttons = [
             Button(
-                center_x, center_y + button_spacing, 300, 50,
+                center_x, center_y + button_spacing / 2, 300, 50,
                 "Resume",
                 lambda: self.on_resume() if self.on_resume else None
             ),
             Button(
-                center_x, center_y, 300, 50,
-                "Settings",
-                lambda: self.on_settings() if self.on_settings else None
-            ),
-            Button(
-                center_x, center_y - button_spacing, 300, 50,
+                center_x, center_y - button_spacing / 2, 300, 50,
                 "Quit to Menu",
                 lambda: self.on_quit() if self.on_quit else None
             ),

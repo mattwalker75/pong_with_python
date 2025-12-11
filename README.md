@@ -413,6 +413,7 @@ Additional documentation is available in the `docs/` directory:
   - Claude Code
 - **Development Tools**
   - VSCode
+  - Claude Code for VS Code extension
 
 ## Credits
 

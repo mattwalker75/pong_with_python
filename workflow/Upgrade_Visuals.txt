@@ -1,0 +1,18 @@
+
+I passed the following prompt to ChatGTP to generate a visual mockup
+that can be used as inspiration to give to Claude to upgrade the
+visuals of the Pong game:
+
+I am writting a Pong game in python 3.13.x that is utilizing the
+"arcade" 3.3.3 library for graphics.  Can you mockup some graphical images
+of a Pong game that could be graphically rendored using the 
+"arcade" library within the game.  I want to add some fun 3d 
+effects, such as motion blur of the ball and some shadowing to 
+provide the illusion of 3d.  have the game played on a fun retro
+backdrop.  
+
+Generate multiple pictures that I can choose from.  I will want to
+be able to take one of the images and upload it to Claude to use
+for programming.
+
+

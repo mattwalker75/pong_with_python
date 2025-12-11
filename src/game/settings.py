@@ -1,10 +1,37 @@
 """Game settings and configuration."""
 from typing import Literal
 from pydantic import BaseModel, Field
+import arcade
+import json
+from pathlib import Path
+
+
+class ControlMapping(BaseModel):
+    """Control mapping for a single player."""
+    up: int = Field(description="Key code for moving up")
+    down: int = Field(description="Key code for moving down")
+
+    class Config:
+        """Pydantic configuration."""
+        validate_assignment = True
 
 
 class GameSettings(BaseModel):
     """Game configuration settings."""
+
+    # Control settings
+    single_player_controls: ControlMapping = Field(
+        default=ControlMapping(up=arcade.key.UP, down=arcade.key.DOWN),
+        description="Controls for single player mode"
+    )
+    two_player_p1_controls: ControlMapping = Field(
+        default=ControlMapping(up=arcade.key.W, down=arcade.key.S),
+        description="Controls for player 1 in two player mode"
+    )
+    two_player_p2_controls: ControlMapping = Field(
+        default=ControlMapping(up=arcade.key.UP, down=arcade.key.DOWN),
+        description="Controls for player 2 in two player mode"
+    )
 
     # Display settings
     screen_width: int = Field(default=1280, description="Screen width in pixels")
@@ -126,3 +153,120 @@ def update_difficulty_preset(preset: Literal["Easy", "Normal", "Hard"]) -> None:
         settings.ai_difficulty_increase_interval = 8.0
 
     settings.difficulty_preset = preset
+
+
+def save_settings(config_file: Path = None) -> None:
+    """Save current settings to configuration file.
+
+    Args:
+        config_file: Path to config file (defaults to game_config.cfg in project root)
+    """
+    if config_file is None:
+        config_file = Path(__file__).parent.parent.parent / "game_config.cfg"
+
+    # Convert settings to dictionary
+    config_data = {
+        "controls": {
+            "single_player": {
+                "up": settings.single_player_controls.up,
+                "down": settings.single_player_controls.down
+            },
+            "two_player_p1": {
+                "up": settings.two_player_p1_controls.up,
+                "down": settings.two_player_p1_controls.down
+            },
+            "two_player_p2": {
+                "up": settings.two_player_p2_controls.up,
+                "down": settings.two_player_p2_controls.down
+            }
+        },
+        "display": {
+            "fullscreen": settings.fullscreen
+        },
+        "gameplay": {
+            "winning_score": settings.winning_score,
+            "difficulty_preset": settings.difficulty_preset
+        },
+        "audio": {
+            "enabled": settings.audio_enabled,
+            "master_volume": settings.master_volume
+        }
+    }
+
+    # Save to file
+    with open(config_file, 'w') as f:
+        json.dump(config_data, f, indent=2)
+
+    print(f"[CONFIG] Settings saved to {config_file}")
+
+
+def load_settings(config_file: Path = None) -> bool:
+    """Load settings from configuration file.
+
+    Args:
+        config_file: Path to config file (defaults to game_config.cfg in project root)
+
+    Returns:
+        True if settings were loaded, False if file doesn't exist
+    """
+    global settings
+
+    if config_file is None:
+        config_file = Path(__file__).parent.parent.parent / "game_config.cfg"
+
+    if not config_file.exists():
+        print(f"[CONFIG] No config file found at {config_file}, using defaults")
+        return False
+
+    try:
+        with open(config_file, 'r') as f:
+            config_data = json.load(f)
+
+        # Load control settings
+        if "controls" in config_data:
+            if "single_player" in config_data["controls"]:
+                settings.single_player_controls = ControlMapping(
+                    up=config_data["controls"]["single_player"]["up"],
+                    down=config_data["controls"]["single_player"]["down"]
+                )
+            if "two_player_p1" in config_data["controls"]:
+                settings.two_player_p1_controls = ControlMapping(
+                    up=config_data["controls"]["two_player_p1"]["up"],
+                    down=config_data["controls"]["two_player_p1"]["down"]
+                )
+            if "two_player_p2" in config_data["controls"]:
+                settings.two_player_p2_controls = ControlMapping(
+                    up=config_data["controls"]["two_player_p2"]["up"],
+                    down=config_data["controls"]["two_player_p2"]["down"]
+                )
+
+        # Load display settings
+        if "display" in config_data:
+            if "fullscreen" in config_data["display"]:
+                settings.fullscreen = config_data["display"]["fullscreen"]
+
+        # Load gameplay settings
+        if "gameplay" in config_data:
+            if "winning_score" in config_data["gameplay"]:
+                settings.winning_score = config_data["gameplay"]["winning_score"]
+            if "difficulty_preset" in config_data["gameplay"]:
+                update_difficulty_preset(config_data["gameplay"]["difficulty_preset"])
+
+        # Load audio settings
+        if "audio" in config_data:
+            if "enabled" in config_data["audio"]:
+                settings.audio_enabled = config_data["audio"]["enabled"]
+            if "master_volume" in config_data["audio"]:
+                settings.master_volume = config_data["audio"]["master_volume"]
+
+        print(f"[CONFIG] Settings loaded from {config_file}")
+        return True
+
+    except Exception as e:
+        print(f"[CONFIG] Error loading config file: {e}")
+        print(f"[CONFIG] Using default settings")
+        return False
+
+
+# Load settings on module import
+load_settings()

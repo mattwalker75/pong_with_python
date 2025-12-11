@@ -1,0 +1,17 @@
+
+I passed the following prompt along with the mock_up.png image file
+to ChatGTP to generate the proper prompt that can be given to 
+Claude along with the image to upgrade the graphics of the PONG game:
+
+I am writting a Pong game in python 3.13.x that is utilizing the
+"arcade" 3.3.3 library for graphics.  Can you write a prompt that
+I can give to Claude along with the attached image file to perform
+an upgrade of the visuals of the pong game.  I want it to add some 
+fun 3d effects, such as motion blur of the ball and some shadowing
+to provide the illusion of 3d.  I love the background and would like
+something similar to be played on.  Use this theme throughout 
+the whole game, including menu system and front screen of the game.
+
+My next step will consist of taking the generated prompt along with
+the image and uploading it to Claude so it can perform the coding.
+

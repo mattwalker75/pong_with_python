@@ -1,0 +1,21 @@
+
+Sent the following prompt to Claude to add custom controls to the game:
+
+Lets add the option to map custom controls to the game, for example if 
+I want to change the mapping for the first player to use up/down arrows
+and the second player to use o/l letters then I can.  Also enable the 
+configuration to be different between a single player game and a 2 player
+game.  For example, for a single player game, I may want to use the 
+up/down arrows to control the paddle, but for a two player game I may
+want to have the first player use the w/s keys and the second player
+use the up/down arrows.  I want to make that configurable and to save
+the configuration in a .cfg file that can be loaded at boot time.  But
+if there is no .cfg file, then the game will resort to using default 
+control settings and will create a new .cfg file, if custom controls 
+are specified.  I want all of this managed in the "SETTINGS" section
+on the front page.
+
+Make sure to fully update the documentation highlighting the configurability
+and ensure all required unit tests are added and any existing unit tests
+are updated as needed.
+

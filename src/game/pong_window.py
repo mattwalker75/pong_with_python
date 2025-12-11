@@ -70,7 +70,6 @@ class PongGameView(arcade.View):
         # Create pause menu
         self.pause_menu = PauseMenu()
         self.pause_menu.on_resume = self._resume_game
-        self.pause_menu.on_settings = self._open_settings
         self.pause_menu.on_quit = self._quit_to_menu
 
         # Create background renderer
@@ -335,15 +334,6 @@ class PongGameView(arcade.View):
         """Resume the game."""
         self.paused = False
         self.pause_menu.hide()
-
-    def _open_settings(self) -> None:
-        """Open settings menu from pause menu."""
-        from game.ui.settings_menu import SettingsMenuView
-
-        settings_view = SettingsMenuView()
-        settings_view.on_back = lambda: self.window.show_view(self)
-        settings_view.setup()
-        self.window.show_view(settings_view)
 
     def _quit_to_menu(self) -> None:
         """Return to main menu."""

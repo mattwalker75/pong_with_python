@@ -1,0 +1,14 @@
+
+I passed the following prompt to Claude to enhance code 
+documentation:
+
+Look at the code and make sure the code has proper comments.  
+Also create a README.md file in the "tests" directory mapping 
+out the highlevel test being performed by which file.  
+Also create a README.md in the "src" directory mapping 
+out what all the code files are for and where they are 
+located.   No need to go into a crazy amount of detail in 
+either of those README.md files.  Just think of them as 
+a roadmap to point developers to where different compontents 
+are and what they are used for.
+

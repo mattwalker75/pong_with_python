@@ -10,7 +10,9 @@ Using AI to help develop a fun Pong game that is fully written in Python.
 - **Two Player Mode**: Classic head-to-head gameplay on the same keyboard
 - **Modern Graphics**: Neon arcade aesthetic with smooth animations running at 120 FPS
 - **Adaptive AI**: AI difficulty gradually increases based on game duration
-- **Sound Effects**: Audio feedback for bounces, scoring, and game events (toggleable)
+- **Retro Sound Effects**: Classic Pong "ping" sounds for paddle hits, wall bounces, and scoring
+- **Background Music**: Looping 80s-style arcade music during gameplay
+- **Audio Controls**: Toggle audio on/off in settings menu
 - **Pause Menu**: Pause anytime with ESC key
 - **Settings Menu**: Configure difficulty, audio, fullscreen, and view controls
 - **Fullscreen Support**: Toggle fullscreen mode with F11
@@ -25,7 +27,26 @@ Using AI to help develop a fun Pong game that is fully written in Python.
 
 ## Installation
 
-### 1. Install Python
+### Quick Install (macOS/Linux)
+
+For a one-command installation, run the provided script:
+
+```bash
+./INSTALL.sh
+```
+
+This will:
+- Check Python version
+- Install PortAudio (macOS with Homebrew)
+- Create virtual environment
+- Install all Python dependencies
+- Generate audio files
+
+Then skip to [Running the Game](#running-the-game).
+
+### Manual Installation
+
+#### 1. Install Python
 
 Ensure you have Python 3.10 or higher installed:
 
@@ -35,14 +56,14 @@ python --version
 
 If you need to install Python, download it from [python.org](https://www.python.org/downloads/).
 
-### 2. Clone or Download the Repository
+#### 2. Clone or Download the Repository
 
 ```bash
 git clone <repository-url>
 cd pong_with_python
 ```
 
-### 3. Create a Virtual Environment (Recommended)
+#### 3. Create a Virtual Environment (Recommended)
 
 ```bash
 python -m venv pong_venv
@@ -60,11 +81,37 @@ source pong_venv/bin/activate
 pong_venv\Scripts\activate
 ```
 
-### 4. Install Dependencies
+#### 4. Install System Dependencies (macOS)
+
+On macOS, you need to install the PortAudio library for audio support:
+
+```bash
+brew install portaudio
+```
+
+**Note**: On Linux, install portaudio19-dev: `sudo apt-get install portaudio19-dev`
+On Windows, the PyAudio wheel usually includes portaudio.
+
+#### 5. Install Python Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
+
+#### 6. Generate Audio Files (First Time Only)
+
+The game includes retro sound effects and background music. Generate them once:
+
+```bash
+python setup_audio.py
+```
+
+This creates:
+- Classic "ping" sound effects for paddle and wall hits
+- Scoring sound effects
+- Looping 80s-style arcade background music
+
+**Note**: Audio files are generated programmatically and total ~1.3 MB. You only need to run this once.
 
 ## Running the Game
 
@@ -223,12 +270,24 @@ pong_with_python/
 
 ### No Sound
 
-**Issue**: Sound effects not playing
+**Issue**: Sound effects or music not playing
 
 **Solution**:
-- Check that audio is enabled in Settings menu
-- Verify system volume is not muted
-- Check `audio_enabled` setting in `src/game/settings.py`
+1. Make sure you've generated the audio files:
+   ```bash
+   python setup_audio.py
+   ```
+2. Verify audio files exist in `src/assets/sounds/`:
+   - `paddle_hit.wav`
+   - `wall_hit.wav`
+   - `score.wav`
+   - `game_start.wav`
+   - `game_over.wav`
+   - `background_music.wav`
+3. Check that audio is enabled in Settings menu
+4. Verify system volume is not muted
+5. Check `audio_enabled` setting in `src/game/settings.py`
+6. For detailed troubleshooting, see [docs/AUDIO_TROUBLESHOOTING.md](docs/AUDIO_TROUBLESHOOTING.md)
 
 ### Window Size Issues
 
@@ -254,6 +313,14 @@ rm -rf pong_with_python
 ```
 
 **Note**: The `pong_venv/` directory (if created) and `workflow/` directory remain untouched during uninstallation. Remove these manually if desired.
+
+## Documentation
+
+Additional documentation is available in the `docs/` directory:
+
+- **[AUDIO_README.md](docs/AUDIO_README.md)** - Audio system documentation and API reference
+- **[AUDIO_TROUBLESHOOTING.md](docs/AUDIO_TROUBLESHOOTING.md)** - Audio troubleshooting guide
+- **[ARCADE_3.3_MIGRATION.md](docs/ARCADE_3.3_MIGRATION.md)** - Arcade 3.3.3 migration guide
 
 ## Development
 

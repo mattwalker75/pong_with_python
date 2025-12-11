@@ -204,20 +204,33 @@ class PongGameView(arcade.View):
             self.audio_manager.cleanup()
 
     def _update_player_input(self) -> None:
-        """Update paddle movement based on input."""
-        # Player 1 (left paddle) - W/S
-        if arcade.key.W in self.keys_pressed:
-            self.paddle_left.move_up()
-        elif arcade.key.S in self.keys_pressed:
-            self.paddle_left.move_down()
+        """Update paddle movement based on input using configurable controls."""
+        if self.game_mode == "single":
+            # Single player mode - use single player controls for left paddle
+            controls = settings.single_player_controls
+            if controls.up in self.keys_pressed:
+                self.paddle_left.move_up()
+            elif controls.down in self.keys_pressed:
+                self.paddle_left.move_down()
+            else:
+                self.paddle_left.stop()
         else:
-            self.paddle_left.stop()
+            # Two player mode - use separate controls for each paddle
+            p1_controls = settings.two_player_p1_controls
+            p2_controls = settings.two_player_p2_controls
 
-        # Player 2 (right paddle) - Arrow keys (only in two-player mode)
-        if self.game_mode == "two_player":
-            if arcade.key.UP in self.keys_pressed:
+            # Player 1 (left paddle)
+            if p1_controls.up in self.keys_pressed:
+                self.paddle_left.move_up()
+            elif p1_controls.down in self.keys_pressed:
+                self.paddle_left.move_down()
+            else:
+                self.paddle_left.stop()
+
+            # Player 2 (right paddle)
+            if p2_controls.up in self.keys_pressed:
                 self.paddle_right.move_up()
-            elif arcade.key.DOWN in self.keys_pressed:
+            elif p2_controls.down in self.keys_pressed:
                 self.paddle_right.move_down()
             else:
                 self.paddle_right.stop()

@@ -1,7 +1,7 @@
 """Settings menu view."""
 import arcade
 from typing import Optional, Callable, Literal
-from game.settings import settings, update_difficulty_preset
+from game.settings import settings, update_difficulty_preset, save_settings
 from game.ui.components.button import Button
 
 
@@ -28,8 +28,8 @@ class SettingsMenuView(arcade.View):
     def setup(self) -> None:
         """Set up menu elements."""
         center_x = settings.screen_width / 2
-        start_y = settings.screen_height / 2 + 100
-        button_spacing = 80
+        start_y = settings.screen_height / 2 + 120
+        button_spacing = 70
 
         # Create settings buttons
         self.buttons = [
@@ -49,7 +49,12 @@ class SettingsMenuView(arcade.View):
                 self._toggle_fullscreen
             ),
             Button(
-                center_x, start_y - button_spacing * 3, 300, 50,
+                center_x, start_y - button_spacing * 3, 400, 50,
+                "Configure Controls",
+                self._open_controls
+            ),
+            Button(
+                center_x, start_y - button_spacing * 4, 300, 50,
                 "Back",
                 lambda: self.on_back() if self.on_back else None
             ),
@@ -65,17 +70,29 @@ class SettingsMenuView(arcade.View):
         new_difficulty = self.difficulty_options[self.current_difficulty_index]
         update_difficulty_preset(new_difficulty)
         self.buttons[0].text = f"Difficulty: {new_difficulty}"
+        save_settings()
 
     def _toggle_audio(self) -> None:
         """Toggle audio setting."""
         settings.audio_enabled = not settings.audio_enabled
         self.buttons[1].text = f"Audio: {'ON' if settings.audio_enabled else 'OFF'}"
+        save_settings()
 
     def _toggle_fullscreen(self) -> None:
         """Toggle fullscreen setting."""
         settings.fullscreen = not settings.fullscreen
         self.window.set_fullscreen(settings.fullscreen)
         self.buttons[2].text = f"Fullscreen: {'ON' if settings.fullscreen else 'OFF'}"
+        save_settings()
+
+    def _open_controls(self) -> None:
+        """Open controls configuration menu."""
+        from game.ui.controls_menu import ControlsMenuView
+
+        controls_view = ControlsMenuView()
+        controls_view.on_back = lambda: self.window.show_view(self)
+        controls_view.setup()
+        self.window.show_view(controls_view)
 
     def on_draw(self) -> None:
         """Draw the menu."""
@@ -96,35 +113,6 @@ class SettingsMenuView(arcade.View):
         # Draw buttons
         for button in self.buttons:
             button.draw()
-
-        # Draw controls info
-        y_pos = 180
-        arcade.draw_text(
-            "Controls:",
-            settings.screen_width / 2,
-            y_pos,
-            (200, 200, 255),
-            font_size=24,
-            anchor_x="center",
-            bold=True
-        )
-
-        controls = [
-            "Player 1: W (Up) / S (Down)",
-            "Player 2: Arrow Up / Arrow Down",
-            "Pause: ESC",
-            "Fullscreen Toggle: F11"
-        ]
-
-        for i, control in enumerate(controls):
-            arcade.draw_text(
-                control,
-                settings.screen_width / 2,
-                y_pos - 40 - (i * 25),
-                (150, 150, 200),
-                font_size=14,
-                anchor_x="center"
-            )
 
     def on_key_press(self, key: int, modifiers: int) -> None:
         """Handle key presses.

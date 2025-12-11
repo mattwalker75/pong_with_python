@@ -30,6 +30,7 @@ Setup a virtual environment to work on :
 
 Below are the workflow that I went through to create the Pong Game:
 
+==> INITIAL APPLICATION DEVELOPMENT <==
 1:  Create a new repo, download the repo, and create a new branch to work in
 2:  Used ChatGPT to create a Product Requirements Document
       - 2_Create_PRD.txt
@@ -54,6 +55,7 @@ Below are the workflow that I went through to create the Pong Game:
       - There were issues due to code changes from bugs being fixed earlier
 8:  --  COMITTED THE CODE AND CALLED IT MINIMUM VIABLE PRODUCT (MVP) COMPLETE
 
+==> ENHANCEMENT: ADD AUDIO <==
 9:  Adding enhancement to add audio.
       - 9_Add_Audio.txt
 10: Verify the game works and audio works.  If it does, then don't forget to
@@ -70,4 +72,36 @@ Below are the workflow that I went through to create the Pong Game:
     keep what you need.
 12: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
     
- 
+==> ENHANCEMENT: ADD CUSTOMIZABLE CONTROLS <==
+13: Added enhancement to add customizable controls
+      - 13_Custom_Controls.txt
+14: Verify the game works and the custom controls work.  If it doesn't then 
+    work with Cloude to address any bugs and issues
+15: Always test the game and run all unit tests
+16: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
+
+
+
+==> ENHANCEMENT: UPGRADE THE GRAPHICS <==
+17: Upgrade the visuals of the game by using ChatGPT to create a mockup
+    image to use as inspiration to update the graphics of our Pong game.
+    This is the prompt that I used:
+      - Upgrade_Visuals.txt
+18: The following image was generated from ChatGTP that will be used for
+    graphic visual enhancements to the Pong game:
+      - mock_up.png
+19: I uploaded the following image to ChatGPT and used the following prompt
+    to have it generate a prompt that I can copy/paste directly to Claude
+    along with the "mock_up.png" image to perform the visual upgrades:
+      - Upgrade_Graphics.txt
+20: Generated the mockup image and the associated prompt to use from ChatGPT
+    and performing a copy/paste of the prompt and uploading the image to
+    Claude for processing:
+      - mock_up.png
+      - Graphic_Upgrade_Prompt.pdf
+21: Fully test the Pong game to make sure it works along with the unit
+    tests.  Considering there are most likely a number of changes that
+    need to be made, there will most likely need to be a ton of updates
+    to the unit tests.   Remember to get good code coverage.
+22: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
+

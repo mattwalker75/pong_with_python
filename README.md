@@ -15,6 +15,8 @@ Using AI to help develop a fun Pong game that is fully written in Python.
 - **Audio Controls**: Toggle audio on/off in settings menu
 - **Pause Menu**: Pause anytime with ESC key
 - **Settings Menu**: Configure difficulty, audio, fullscreen, and view controls
+- **Custom Control Mapping**: Fully customizable keyboard controls for both game modes
+- **Configuration Persistence**: Settings automatically saved to and loaded from config file
 - **Fullscreen Support**: Toggle fullscreen mode with F11
 
 ## Requirements
@@ -123,11 +125,19 @@ python src/main.py
 
 ## Controls
 
-### Player 1 (Left Paddle)
+### Default Controls
+
+**Single Player Mode:**
+- **Up Arrow** - Move paddle up
+- **Down Arrow** - Move paddle down
+
+**Two Player Mode:**
+
+Player 1 (Left Paddle):
 - **W** - Move up
 - **S** - Move down
 
-### Player 2 (Right Paddle) - Two Player Mode Only
+Player 2 (Right Paddle):
 - **Up Arrow** - Move up
 - **Down Arrow** - Move down
 
@@ -136,6 +146,18 @@ python src/main.py
 - **F11** - Toggle fullscreen
 - **Enter** - Select menu option / Play again after game over
 - **Arrow Keys** - Navigate menus
+
+### Customizing Controls
+
+All game controls are fully customizable through the settings menu:
+
+1. From the main menu, select **SETTINGS**
+2. Select **Configure Controls**
+3. Click on any control to remap it
+4. Press the key you want to assign
+5. Your settings are automatically saved to `game_config.cfg`
+
+**Note**: Single player and two player modes have separate control configurations, allowing you to optimize controls for each mode independently.
 
 ## Gameplay
 
@@ -161,9 +183,56 @@ python src/main.py
 
 ## Configuration
 
-The game can be configured by modifying the settings in [src/game/settings.py](src/game/settings.py).
+### In-Game Settings
 
-### Common Settings
+Most settings can be configured through the in-game settings menu (accessible from the main menu):
+
+- **Difficulty**: Choose between Easy, Normal, or Hard AI difficulty
+- **Audio**: Enable/disable sound effects and music
+- **Fullscreen**: Toggle fullscreen mode
+- **Controls**: Customize keyboard controls for both game modes
+
+Settings are automatically saved to `game_config.cfg` in the project root directory and will be loaded on next startup.
+
+### Configuration File
+
+Your personalized settings are stored in `game_config.cfg`:
+
+```json
+{
+  "controls": {
+    "single_player": {
+      "up": 65362,    // Key code for UP arrow
+      "down": 65364   // Key code for DOWN arrow
+    },
+    "two_player_p1": {
+      "up": 119,      // Key code for W
+      "down": 115     // Key code for S
+    },
+    "two_player_p2": {
+      "up": 65362,    // Key code for UP arrow
+      "down": 65364   // Key code for DOWN arrow
+    }
+  },
+  "display": {
+    "fullscreen": false
+  },
+  "gameplay": {
+    "winning_score": 10,
+    "difficulty_preset": "Normal"
+  },
+  "audio": {
+    "enabled": true,
+    "master_volume": 0.7
+  }
+}
+```
+
+**Note**: If you delete `game_config.cfg`, the game will create a new one with default settings on next startup.
+
+### Advanced Settings (Code)
+
+Advanced users can modify additional settings in [src/game/settings.py](src/game/settings.py):
 
 ```python
 # Display
@@ -171,20 +240,15 @@ screen_width = 1280          # Screen width in pixels
 screen_height = 720          # Screen height in pixels
 target_fps = 120             # Target frames per second
 
-# Gameplay
-winning_score = 10           # Score needed to win
-difficulty_preset = "Normal" # AI difficulty: "Easy", "Normal", or "Hard"
-
-# Audio
-audio_enabled = True         # Enable/disable sound effects
-master_volume = 0.7          # Volume level (0.0 to 1.0)
-
 # Paddle
 paddle_speed = 6.0           # Paddle movement speed
+paddle_acceleration = 0.8    # Acceleration factor
+paddle_friction = 0.85       # Friction/deceleration
 
 # Ball
 ball_initial_speed = 5.0     # Starting ball speed
 ball_max_speed = 12.0        # Maximum ball speed
+ball_speed_increase = 0.05   # Speed increase per bounce
 ```
 
 ## Testing
@@ -209,7 +273,7 @@ This generates an HTML coverage report in the `htmlcov/` directory.
 - `tests/test_paddle.py` - Paddle movement and physics tests
 - `tests/test_ball.py` - Ball physics and collision tests
 - `tests/test_ai.py` - AI controller and difficulty tests
-- `tests/test_settings.py` - Settings and configuration tests
+- `tests/test_settings.py` - Settings, configuration, and control mapping tests
 - `tests/test_game_state.py` - Game state and logic tests
 
 ## Project Structure
@@ -224,16 +288,20 @@ pong_with_python/
 │       ├── paddle.py              # Paddle class
 │       ├── ball.py                # Ball class
 │       ├── ai_controller.py       # AI logic
-│       ├── settings.py            # Game settings
-│       ├── audio_manager.py       # Sound effects
+│       ├── settings.py            # Game settings and configuration
+│       ├── audio_manager_pyaudio.py  # Sound effects (PyAudio)
+│       ├── sound_generator.py     # Audio file generation
 │       └── ui/
 │           ├── main_menu.py       # Main menu
 │           ├── pause_menu.py      # Pause menu
 │           ├── settings_menu.py   # Settings menu
+│           ├── controls_menu.py   # Control remapping menu
 │           └── components/
 │               └── button.py      # Button component
 ├── tests/                         # Unit tests
-├── workflow/                      # AI development notes and documentation
+├── docs/                          # Documentation
+├── workflow/                      # AI development notes
+├── game_config.cfg                # User settings (auto-generated)
 ├── requirements.txt               # Python dependencies
 └── README.md                      # This file
 ```

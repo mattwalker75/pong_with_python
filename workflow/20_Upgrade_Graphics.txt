@@ -1,0 +1,12 @@
+
+I passed the following prompt to Claude to upgrade the graphics:
+
+< Paste the contents of the "Graphic_Upgrade_Prompt.pdf" file >
+
+The following image is the image being referenced in the document:
+./workflow/mock_up.png
+
+Please verify that you can access and view the image successfully 
+prior to making any modifications or moving forward with the
+graphics enhancements.  
+

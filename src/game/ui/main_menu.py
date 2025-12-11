@@ -3,6 +3,7 @@ import arcade
 from typing import Optional, Callable
 from game.settings import settings
 from game.ui.components.button import Button
+from game.background_renderer import BackgroundRenderer
 
 
 class MainMenuView(arcade.View):
@@ -14,6 +15,7 @@ class MainMenuView(arcade.View):
         self.buttons = []
         self.selected_index = 0
         self.title = "PONG"
+        self.background_renderer = None
 
         # Callbacks
         self.on_single_player: Optional[Callable] = None
@@ -26,6 +28,12 @@ class MainMenuView(arcade.View):
         center_x = settings.screen_width / 2
         start_y = settings.screen_height / 2 - 50
         button_spacing = 70
+
+        # Create background renderer
+        self.background_renderer = BackgroundRenderer(
+            settings.screen_width,
+            settings.screen_height
+        )
 
         # Create menu buttons
         self.buttons = [
@@ -56,14 +64,33 @@ class MainMenuView(arcade.View):
     def on_draw(self) -> None:
         """Draw the menu."""
         self.clear()
-        arcade.set_background_color(settings.background_color)
 
-        # Draw title
+        # Draw synthwave background
+        if self.background_renderer:
+            self.background_renderer.draw()
+
+        # Draw title with neon glow
+        title_color = settings.synthwave_city_windows_cyan
+        glow_color = settings.synthwave_grid_glow
+
+        # Title glow layers
+        for offset, alpha in [(6, 30), (4, 60), (2, 100)]:
+            arcade.draw_text(
+                self.title,
+                settings.screen_width / 2 + offset,
+                settings.screen_height - 150 - offset,
+                (*glow_color, alpha),
+                font_size=80,
+                anchor_x="center",
+                bold=True
+            )
+
+        # Main title
         arcade.draw_text(
             self.title,
             settings.screen_width / 2,
             settings.screen_height - 150,
-            (0, 255, 255),
+            title_color,
             font_size=80,
             anchor_x="center",
             bold=True
@@ -71,10 +98,10 @@ class MainMenuView(arcade.View):
 
         # Draw subtitle
         arcade.draw_text(
-            "Arcade Edition",
+            "Synthwave Edition",
             settings.screen_width / 2,
             settings.screen_height - 210,
-            (200, 200, 255),
+            settings.synthwave_grid_color,
             font_size=24,
             anchor_x="center"
         )
@@ -88,7 +115,7 @@ class MainMenuView(arcade.View):
             "Use Arrow Keys and Enter to select",
             settings.screen_width / 2,
             50,
-            (100, 100, 150),
+            settings.synthwave_grid_glow,
             font_size=14,
             anchor_x="center"
         )

@@ -1,0 +1,8 @@
+
+I passed the following prompt to Claude to fix the glitch with
+the graphics during the graphics upgrade:
+
+There is an issue where the buildings in the background are being
+rendored upside down.  Here I attached a screenshot so you can
+see what I am talking about:  ./workflow/broke.png
+

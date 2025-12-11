@@ -120,6 +120,63 @@ class GameSettings(BaseModel):
         description="Center line RGB color"
     )
 
+    # Synthwave visual theme settings
+    synthwave_sky_top: tuple[int, int, int] = Field(
+        default=(10, 5, 40),
+        description="Sky gradient top color (deep blue/purple)"
+    )
+    synthwave_sky_bottom: tuple[int, int, int] = Field(
+        default=(60, 20, 80),
+        description="Sky gradient bottom color (purple)"
+    )
+    synthwave_grid_color: tuple[int, int, int] = Field(
+        default=(255, 20, 147),
+        description="Perspective grid lines color (hot pink/magenta)"
+    )
+    synthwave_grid_glow: tuple[int, int, int] = Field(
+        default=(255, 105, 180),
+        description="Grid glow color (lighter pink)"
+    )
+    synthwave_city_base: tuple[int, int, int] = Field(
+        default=(20, 20, 40),
+        description="City building base color (dark)"
+    )
+    synthwave_city_windows_cyan: tuple[int, int, int] = Field(
+        default=(0, 255, 255),
+        description="City windows cyan accent"
+    )
+    synthwave_city_windows_pink: tuple[int, int, int] = Field(
+        default=(255, 20, 147),
+        description="City windows pink accent"
+    )
+    synthwave_city_windows_orange: tuple[int, int, int] = Field(
+        default=(255, 140, 0),
+        description="City windows orange accent"
+    )
+    synthwave_paddle_core: tuple[int, int, int] = Field(
+        default=(255, 255, 240),
+        description="Paddle core color (bright white/cream)"
+    )
+    synthwave_paddle_glow: tuple[int, int, int] = Field(
+        default=(200, 200, 255),
+        description="Paddle glow color (soft blue-white)"
+    )
+    synthwave_ball_core: tuple[int, int, int] = Field(
+        default=(255, 255, 255),
+        description="Ball core color (pure white)"
+    )
+    synthwave_ball_glow: tuple[int, int, int] = Field(
+        default=(255, 200, 255),
+        description="Ball glow color (pink-white)"
+    )
+
+    # Visual effect settings
+    glow_intensity: float = Field(default=1.0, ge=0.0, le=2.0, description="Global glow intensity")
+    motion_blur_enabled: bool = Field(default=True, description="Enable ball motion blur trail")
+    motion_blur_length: int = Field(default=15, description="Number of trail segments")
+    star_count: int = Field(default=100, description="Number of background stars")
+    grid_perspective_depth: float = Field(default=0.8, description="Grid perspective depth factor")
+
     class Config:
         """Pydantic configuration."""
         validate_assignment = True

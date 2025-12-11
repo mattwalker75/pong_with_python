@@ -7,6 +7,7 @@ from game.ball import Ball
 from game.ai_controller import AIController
 from game.audio_manager_pyaudio import PyAudioManager as AudioManager
 from game.ui.pause_menu import PauseMenu
+from game.background_renderer import BackgroundRenderer
 
 
 class PongGameView(arcade.View):
@@ -28,6 +29,7 @@ class PongGameView(arcade.View):
         self.ai_controller: Optional[AIController] = None
         self.audio_manager: Optional[AudioManager] = None
         self.pause_menu: Optional[PauseMenu] = None
+        self.background_renderer: Optional[BackgroundRenderer] = None
 
         # Game state
         self.score_left = 0
@@ -71,6 +73,12 @@ class PongGameView(arcade.View):
         self.pause_menu.on_settings = self._open_settings
         self.pause_menu.on_quit = self._quit_to_menu
 
+        # Create background renderer
+        self.background_renderer = BackgroundRenderer(
+            settings.screen_width,
+            settings.screen_height
+        )
+
         # Reset game state
         self.score_left = 0
         self.score_right = 0
@@ -85,7 +93,9 @@ class PongGameView(arcade.View):
     def on_draw(self) -> None:
         """Draw the game."""
         self.clear()
-        arcade.set_background_color(settings.background_color)
+
+        # Draw synthwave background
+        self.background_renderer.draw()
 
         if not self.game_over:
             # Draw center line
@@ -382,24 +392,47 @@ class PongGameView(arcade.View):
             y += dash_height + gap_height
 
     def _draw_scores(self) -> None:
-        """Draw player scores."""
-        # Left score
+        """Draw player scores with neon glow."""
+        score_color = settings.synthwave_city_windows_cyan
+        glow_color = settings.synthwave_grid_glow
+
+        # Left score with glow
+        for offset, alpha in [(4, 40), (2, 80)]:
+            arcade.draw_text(
+                str(self.score_left),
+                settings.screen_width / 4 + offset,
+                settings.screen_height - 80 - offset,
+                (*glow_color, alpha),
+                font_size=48,
+                anchor_x="center",
+                bold=True
+            )
         arcade.draw_text(
             str(self.score_left),
             settings.screen_width / 4,
             settings.screen_height - 80,
-            settings.score_color,
+            score_color,
             font_size=48,
             anchor_x="center",
             bold=True
         )
 
-        # Right score
+        # Right score with glow
+        for offset, alpha in [(4, 40), (2, 80)]:
+            arcade.draw_text(
+                str(self.score_right),
+                settings.screen_width * 3 / 4 + offset,
+                settings.screen_height - 80 - offset,
+                (*glow_color, alpha),
+                font_size=48,
+                anchor_x="center",
+                bold=True
+            )
         arcade.draw_text(
             str(self.score_right),
             settings.screen_width * 3 / 4,
             settings.screen_height - 80,
-            settings.score_color,
+            score_color,
             font_size=48,
             anchor_x="center",
             bold=True

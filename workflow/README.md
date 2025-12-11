@@ -80,28 +80,30 @@ Below are the workflow that I went through to create the Pong Game:
 15: Always test the game and run all unit tests
 16: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
 
-
-
 ==> ENHANCEMENT: UPGRADE THE GRAPHICS <==
+      NOTE:  Orignal look prior to graphics upgrade:  original_graphics.png
 17: Upgrade the visuals of the game by using ChatGPT to create a mockup
     image to use as inspiration to update the graphics of our Pong game.
     This is the prompt that I used:
-      - Upgrade_Visuals.txt
+      - 17_Upgrade_Visuals.txt
 18: The following image was generated from ChatGTP that will be used for
     graphic visual enhancements to the Pong game:
       - mock_up.png
-19: I uploaded the following image to ChatGPT and used the following prompt
+19: I uploaded the "mock_up.png" image to ChatGPT and used the following prompt
     to have it generate a prompt that I can copy/paste directly to Claude
     along with the "mock_up.png" image to perform the visual upgrades:
-      - Upgrade_Graphics.txt
+      - 19_Upgrade_Graphics.txt
 20: Generated the mockup image and the associated prompt to use from ChatGPT
-    and performing a copy/paste of the prompt and uploading the image to
-    Claude for processing:
-      - mock_up.png
-      - Graphic_Upgrade_Prompt.pdf
+    and passing it to Claude for processing:
+      - 20_Upgrade_Graphics.txt 
 21: Fully test the Pong game to make sure it works along with the unit
     tests.  Considering there are most likely a number of changes that
     need to be made, there will most likely need to be a ton of updates
     to the unit tests.   Remember to get good code coverage.
-22: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
+22: Had some visual issues with the graphics, so I had to take a screenshot
+    of the issue and upload it to Claude.  Below is the screenshot and 
+    prompt that I sent:
+      - broke.png
+      - 22_Graphic_Glitch.txt 
+23: --  COMMITED THE CODE AND CALLED THE ENHANCEMENT COMPLETE
 

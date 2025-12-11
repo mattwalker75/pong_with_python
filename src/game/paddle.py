@@ -2,6 +2,7 @@
 import arcade
 from typing import Literal
 from game.settings import settings
+from game.visual_effects import GlowEffect
 
 
 class Paddle(arcade.SpriteSolidColor):
@@ -85,5 +86,13 @@ class Paddle(arcade.SpriteSolidColor):
         self.target_velocity = 0.0
 
     def draw(self) -> None:
-        """Draw the paddle."""
-        arcade.draw.draw_sprite(self)
+        """Draw the paddle with synthwave glow effect."""
+        GlowEffect.draw_rectangular_glow(
+            self.center_x,
+            self.center_y,
+            settings.paddle_width,
+            settings.paddle_height,
+            settings.synthwave_paddle_core,
+            settings.synthwave_paddle_glow,
+            intensity=1.2
+        )

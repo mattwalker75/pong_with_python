@@ -3,6 +3,7 @@ import arcade
 import random
 import math
 from game.settings import settings
+from game.visual_effects import GlowEffect, MotionTrail
 
 
 class Ball(arcade.SpriteCircle):
@@ -28,6 +29,9 @@ class Ball(arcade.SpriteCircle):
         self.min_y = settings.ball_radius
         self.max_y = settings.screen_height - settings.ball_radius
 
+        # Motion trail effect
+        self.motion_trail = MotionTrail(max_length=settings.motion_blur_length)
+
     def launch(self, direction: int = 0) -> None:
         """Launch the ball in a random direction.
 
@@ -47,6 +51,9 @@ class Ball(arcade.SpriteCircle):
         """Update ball position."""
         self.center_x += self.velocity_x
         self.center_y += self.velocity_y
+
+        # Update motion trail
+        self.motion_trail.update(self.center_x, self.center_y)
 
         # Bounce off top and bottom walls
         if self.center_y <= self.min_y:
@@ -111,6 +118,7 @@ class Ball(arcade.SpriteCircle):
         self.velocity_x = 0.0
         self.velocity_y = 0.0
         self.speed = settings.ball_initial_speed
+        self.motion_trail.clear()
 
     def is_out_of_bounds_left(self) -> bool:
         """Check if ball went past left boundary."""
@@ -121,5 +129,20 @@ class Ball(arcade.SpriteCircle):
         return self.center_x > settings.screen_width
 
     def draw(self) -> None:
-        """Draw the ball."""
-        arcade.draw.draw_sprite(self)
+        """Draw the ball with motion trail and glow effect."""
+        # Draw motion trail first (behind the ball)
+        self.motion_trail.draw(
+            settings.ball_radius,
+            settings.synthwave_ball_core,
+            settings.synthwave_ball_glow
+        )
+
+        # Draw ball with radial glow
+        GlowEffect.draw_radial_glow(
+            self.center_x,
+            self.center_y,
+            settings.ball_radius,
+            settings.synthwave_ball_core,
+            settings.synthwave_ball_glow,
+            intensity=1.5
+        )

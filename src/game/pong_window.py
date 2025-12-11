@@ -5,7 +5,7 @@ from game.settings import settings
 from game.paddle import Paddle
 from game.ball import Ball
 from game.ai_controller import AIController
-from game.audio_manager import AudioManager
+from game.audio_manager_pyaudio import PyAudioManager as AudioManager
 from game.ui.pause_menu import PauseMenu
 
 
@@ -77,8 +77,9 @@ class PongGameView(arcade.View):
         self.game_over = False
         self.winner = ""
 
-        # Start the ball
+        # Start the ball and background music
         self.audio_manager.play_game_start()
+        self.audio_manager.play_background_music()
         self.ball.launch()
 
     def on_draw(self) -> None:
@@ -196,6 +197,11 @@ class PongGameView(arcade.View):
             modifiers: Modifier keys held
         """
         self.pause_menu.handle_mouse_press(x, y)
+
+    def on_hide_view(self) -> None:
+        """Called when this view is hidden (e.g., switching to menu)."""
+        if self.audio_manager:
+            self.audio_manager.cleanup()
 
     def _update_player_input(self) -> None:
         """Update paddle movement based on input."""

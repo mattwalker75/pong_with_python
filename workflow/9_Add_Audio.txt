@@ -1,0 +1,9 @@
+
+Sent the following prompt to Claude to add audio to the game:
+
+Looking at the code, it seems like there is audio coded into the game, but
+none of the audio is working.  Lets add some audio to the game consisting of
+some fun traditional pong "ping" sounds when the ball this a surface or paddle
+and lets softly play some 80's vintage arcade-ish music while playing the game.
+
+
